@@ -109,36 +109,33 @@ function completeTask(index) {
         // remove from task array
         task.getTasks().splice(index, 1);
         displayTasks();
-        getCompletedTasks();
+        let completed = document.querySelector(".completed");
+        completed.innerHTML = "<h1>Completed tasks</h1>";
+        complete.getCompletedTask().map(function (item, i) {
+            let dateNow = new Date();
+            let duedate = new Date(item.duedate);
+            let start = dateNow.getTime();
+            let due = duedate.getTime();
+            let diff = Math.ceil((due - start) / (24 * 3600 * 1000));
+            const maindiv = document.createElement("div");
+            maindiv.style.backgroundColor = "azure";
+            maindiv.style.height = "200px";
+            maindiv.style.textAlign = "center";
+            const h2 = document.createElement("h2");
+            const h4 = document.createElement("h4");
+            const p = document.createElement("p");
+            const p2 = document.createElement("p");
+            h2.textContent = `${item.title}`;
+            h4.textContent = `${item.desc}`;
+            p.textContent = `${item.duedate}`;
+            p2.textContent = diff >= 0 ? `You submitted  ${diff} days early` : `You submitted  ${diff} days late`;
+            console.log(diff);
+            maindiv.appendChild(h2);
+            maindiv.appendChild(h4);
+            maindiv.appendChild(p);
+            maindiv.appendChild(p2);
+            completed.appendChild(maindiv);
+        });
     }
 }
 ;
-function getCompletedTasks() {
-    let completed = document.querySelector(".completed");
-    completed.innerHTML = "<h1>Completed tasks</h1>";
-    complete.getCompletedTask().map(function (item, i) {
-        let dateNow = new Date();
-        let duedate = new Date(item.duedate);
-        let start = dateNow.getTime();
-        let due = duedate.getTime();
-        let diff = Math.ceil((due - start) / (24 * 3600 * 1000));
-        const maindiv = document.createElement("div");
-        maindiv.style.backgroundColor = "azure";
-        maindiv.style.height = "200px";
-        maindiv.style.textAlign = "center";
-        const h2 = document.createElement("h2");
-        const h4 = document.createElement("h4");
-        const p = document.createElement("p");
-        const p2 = document.createElement("p");
-        h2.textContent = `${item.title}`;
-        h4.textContent = `${item.desc}`;
-        p.textContent = `${item.duedate}`;
-        p2.textContent = diff >= 0 ? `You submitted  ${diff} days early` : `You submitted  ${diff} days late`;
-        console.log(diff);
-        maindiv.appendChild(h2);
-        maindiv.appendChild(h4);
-        maindiv.appendChild(p);
-        maindiv.appendChild(p2);
-        completed.appendChild(maindiv);
-    });
-}

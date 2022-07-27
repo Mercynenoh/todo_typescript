@@ -136,12 +136,7 @@ class _task {
   
       task.getTasks().splice(index, 1);
       displayTasks();
-      getCompletedTasks();
-    }
-  };
-
-  function getCompletedTasks() {
-    let completed = document.querySelector(".completed") as HTMLDivElement;
+      let completed = document.querySelector(".completed") as HTMLDivElement;
     completed.innerHTML = "<h1>Completed tasks</h1>";
     complete.getCompletedTask().map(function (item, i) {
       let dateNow = new Date();
@@ -170,5 +165,8 @@ class _task {
       maindiv.appendChild(p2);
       completed.appendChild(maindiv);
     });
-  }
+    }
+  };
+
+
               
