@@ -11,19 +11,12 @@ let btn = document.getElementById("sub1");
 class _task {
     constructor() {
         this.taskArr = [];
-        this.completedTasks = [];
     }
     createTask(todo) {
         this.taskArr.push(todo);
     }
     getTasks() {
         return this.taskArr;
-    }
-    completedTask(todo) {
-        this.completedTasks.push(todo);
-    }
-    getCompletedTask() {
-        return this.completedTasks;
     }
     getTaskById(id) {
         return this.taskArr.find((task) => task.id === id);
@@ -33,6 +26,18 @@ class _task {
         this.taskArr.splice(id, 1);
     }
     ;
+}
+class Completed extends _task {
+    constructor() {
+        super();
+        this.completedTasks = [];
+    }
+    completedTask(todo) {
+        this.completedTasks.push(todo);
+    }
+    getCompletedTask() {
+        return this.completedTasks;
+    }
 }
 const task = new _task();
 submit.addEventListener('submit', (e) => {
@@ -91,30 +96,16 @@ const removeTask = (taskIndex) => {
     task.deleteTask(taskIndex);
     displayTasks();
 };
+const complete = new Completed();
 function completeTask(index) {
     let inputs = document.getElementById("checked");
-    let dateNow = new Date();
-    let duedate = new Date(task.getTasks()[index].duedate);
-    let start = dateNow.getTime();
-    let due = duedate.getTime();
-    let diff = Math.ceil((start - due) / (24 * 3600 * 1000));
+    let completed = document.querySelector(".completed");
+    completed.innerHTML = "<h1>Completed tasks</h1>";
     inputs.checked = true;
     if (inputs.checked === true) {
-        const completed = task.getTasks().map((task, index) => `
-                  <div class='task'>
-                    <h2>${task.title}</h2>
-                    <h4>${task.desc}</h4>
-                    <p>${task.duedate}</p>
-                    <p> Completed in : ${diff}</p>
-                  </div>
-                `);
-        console.log('item.diff');
-        completed.forEach((task) => {
-            tasks.insertAdjacentHTML("beforeend", task);
-        });
         const singlecompletedtask = task.getTasks()[index];
         // Add to completed Array
-        task.getCompletedTask().push(Object.assign({}, singlecompletedtask));
+        complete.getCompletedTask().push(Object.assign({}, singlecompletedtask));
         // remove from task array
         task.getTasks().splice(index, 1);
         displayTasks();
@@ -125,8 +116,12 @@ function completeTask(index) {
 function getCompletedTasks() {
     let completed = document.querySelector(".completed");
     completed.innerHTML = "<h1>Completed tasks</h1>";
-    // let title,desc,duedate,diff=''
-    task.getCompletedTask().map(function (item, i) {
+    complete.getCompletedTask().map(function (item, i) {
+        let dateNow = new Date();
+        let duedate = new Date(item.duedate);
+        let start = dateNow.getTime();
+        let due = duedate.getTime();
+        let diff = Math.ceil((due - start) / (24 * 3600 * 1000));
         const maindiv = document.createElement("div");
         maindiv.style.backgroundColor = "azure";
         maindiv.style.height = "200px";
@@ -138,7 +133,8 @@ function getCompletedTasks() {
         h2.textContent = `${item.title}`;
         h4.textContent = `${item.desc}`;
         p.textContent = `${item.duedate}`;
-        p2.textContent = `You submitted  days early`;
+        p2.textContent = diff >= 0 ? `You submitted  ${diff} days early` : `You submitted  ${diff} days late`;
+        console.log(diff);
         maindiv.appendChild(h2);
         maindiv.appendChild(h4);
         maindiv.appendChild(p);
