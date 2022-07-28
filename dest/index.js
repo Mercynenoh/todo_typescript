@@ -54,7 +54,7 @@ class Completed extends _task {
         this.completedTasks.push(todo);
         this.displayTasks();
     }
-    getCompletedTask() {
+    getTasks() {
         return this.completedTasks;
     }
 }
@@ -102,13 +102,13 @@ function completeTask(index) {
     if (inputs.checked === true) {
         const singlecompletedtask = task.getTasks()[index];
         // Add to completed Array
-        complete.getCompletedTask().push(Object.assign({}, singlecompletedtask));
+        complete.getTasks().push(Object.assign({}, singlecompletedtask));
         // remove from task array
         task.getTasks().splice(index, 1);
         task.displayTasks();
         let completed = document.querySelector(".completed");
         completed.innerHTML = "<h1>Completed tasks</h1>";
-        complete.getCompletedTask().map(function (item, i) {
+        complete.getTasks().map(function (item, i) {
             let dateNow = new Date();
             let duedate = new Date(item.duedate);
             let start = dateNow.getTime();
