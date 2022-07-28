@@ -1,18 +1,21 @@
 .container{
-    background-color: rgb(228, 228, 223);
-    height: 100%;
+    background-image:url(./task.jpg);
+    object-fit:contain;
+    height: 100vh;
     display: flex;
     flex-wrap: wrap;
     padding: 10px;
    justify-content: center;
    gap: 10%;
+   width: 100vw;
 }
 .task{
-height: 200px;
+height: 250px;
 /* border: 2px solid royalblue; */
 border-radius: 5%;
 background-color: azure;
 text-align: center;
+width:300px;
 }
 #sub{
     display: none;
@@ -36,12 +39,20 @@ text-align: center;
 #inputField_two{
     height: 100px;
     width: 200px;
-    border: none;
+    background-color: transparent;
+    font-size: 17px;
+    border-radius: 5px;
 }
 #inputField{
     height: 50px;
     width: 200px;
-    border: none;
+    background-color: transparent;
+    font-size: 20px;
+    border-radius: 5px;
+}
+#inputField_three{
+    background-color: transparent;
+    border-radius: 5px;
 }
 .checkbox{
     padding: 5%;
